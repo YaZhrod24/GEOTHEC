@@ -87,6 +87,6 @@ $front = new ControllerPrincipal();
 
 $front->add("", "Accueil", "index", true);
 $front->add("([0-9]+)", "Accueil", "Chiffre", true);
-$front->add("([a-zA-Z0-9_-]+)", "Accueil", "Lettre", true);
+$front->add("([a-zA-Z0-9_-]+)", "Accueil", "Lettre", false);
 
 $front->run($url);
