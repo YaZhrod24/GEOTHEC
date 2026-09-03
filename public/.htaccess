@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Si le fichier ou dossier existe dans le dossier public (ex: image, css), on laisse passer
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Sinon, on redirige vers le index.php du dossier public
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]

@@ -1,0 +1,3 @@
+RewriteEngine On
+# On redirige tout vers le dossier public
+RewriteRule ^(.*)$ public/$1 [L]

@@ -1,0 +1,5 @@
+compilation/
+.git/
+readme.md
+bdd.sql
+.env
