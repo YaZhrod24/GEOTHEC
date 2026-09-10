@@ -22,17 +22,19 @@ $method = $_SERVER['REQUEST_METHOD'];
 $baseDir = '/Ecole/GEOTECH/API/public';
 $route = str_replace($baseDir, '', $uri);
 
-// Route publique
+// Route publique : Connexion
 if ($route === '/login' && $method === 'POST') {
     AuthController::login();
     exit;
 }
 
-// Sécurisation JWT
+// Vérification du Token JWT pour toutes les routes suivantes
 $decoded = AuthMiddleware::authenticate();
 $currentUser = $decoded->user;
 
-// Routes Interventions
+// ==========================================
+// ROUTES INTERVENTIONS
+// ==========================================
 if ($route === '/interventions' && $method === 'GET') {
     InterventionController::getAll($currentUser);
 } elseif ($route === '/interventions' && $method === 'POST') {
@@ -40,19 +42,40 @@ if ($route === '/interventions' && $method === 'GET') {
 } elseif (preg_match('#^/interventions/(\d+)/status$#', $route, $matches) && $method === 'PUT') {
     InterventionController::updateStatus($matches[1], $currentUser);
 
-// Routes Gestion du Parc & Techniciens
+// ==========================================
+// ROUTES CLIENTS (CRUD)
+// ==========================================
 } elseif ($route === '/clients' && $method === 'GET') {
     ParcController::getClients($currentUser);
 } elseif ($route === '/clients' && $method === 'POST') {
     ParcController::createClient($currentUser);
+} elseif (preg_match('#^/clients/(\d+)$#', $route, $matches) && $method === 'PUT') {
+    ParcController::updateClient($matches[1], $currentUser);
+} elseif (preg_match('#^/clients/(\d+)$#', $route, $matches) && $method === 'DELETE') {
+    ParcController::deleteClient($matches[1], $currentUser);
+
+// ==========================================
+// ROUTES ÉQUIPEMENTS (CRUD)
+// ==========================================
 } elseif ($route === '/equipements' && $method === 'GET') {
     ParcController::getEquipements($currentUser);
 } elseif ($route === '/equipements' && $method === 'POST') {
     ParcController::createEquipement($currentUser);
+} elseif (preg_match('#^/equipements/(\d+)$#', $route, $matches) && $method === 'PUT') {
+    ParcController::updateEquipement($matches[1], $currentUser);
+} elseif (preg_match('#^/equipements/(\d+)$#', $route, $matches) && $method === 'DELETE') {
+    ParcController::deleteEquipement($matches[1], $currentUser);
+
+// ==========================================
+// ROUTE TECHNICIENS
+// ==========================================
 } elseif ($route === '/techniciens' && $method === 'GET') {
     ParcController::getTechniciens($currentUser);
 
+// ==========================================
+// ROUTE INCONNUE
+// ==========================================
 } else {
     http_response_code(404);
-    echo json_encode(['error' => 'Route introuvable']);
+    echo json_encode(['error' => 'Route introuvable', 'uri' => $route]);
 }
