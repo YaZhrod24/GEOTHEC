@@ -59,7 +59,9 @@ class ControleurPrincipal
         }
 
         // Aucune route ne correspond à l'URL
-        echo "Page introuvable";
+        require_once Racine . '/../app/vue/layout/entete.php';
+        require_once Racine . '/../app/vue/erreur/404.php';
+        require_once Racine . '/../app/vue/layout/pied.php';
     }
 
 

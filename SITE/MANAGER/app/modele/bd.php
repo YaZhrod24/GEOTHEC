@@ -14,7 +14,7 @@ class PDO_Connexion
 
             // Initialisation ici au lieu du constructeur
             $this->host = 'localhost';
-            $this->dbname = 'roulettev2';
+            $this->dbname = 'basededonness';
             $this->username = 'root';
             $this->password = '';
 

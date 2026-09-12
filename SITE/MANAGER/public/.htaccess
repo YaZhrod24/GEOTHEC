@@ -1,6 +1,8 @@
 RewriteEngine On
 
-# Envoyer les routes PHP vers le contrôleur frontal.
+# Si l'URL ne correspond pas à un fichier existant,
+# on l'envoie vers index.php
+
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [QSA,L]
+
+RewriteRule ^ index.php [L]
