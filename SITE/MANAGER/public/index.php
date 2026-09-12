@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__ . '/../app/controleur/ControleurPrincipal.php';
+$racine = dirname(__FILE__);
 
-// Création du contrôleur principal
+require_once "$racine/../app/controleur/controleurPrincipal.php";
+
 $controleur = new ControleurPrincipal();
 
-// Lancement de l'application
-$controleur->routeur();
+$controleur->gererRequete();

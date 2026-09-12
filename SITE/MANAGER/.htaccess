@@ -1,6 +1,8 @@
 RewriteEngine On
 
-# Laisser Apache servir les vrais fichiers et envoyer les routes vers public/index.php.
+# Si l'URL ne correspond pas à un fichier existant,
+# on l'envoie vers public/index.php
+
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ public/index.php [QSA,L]
+
+RewriteRule ^ public/index.php [L]
